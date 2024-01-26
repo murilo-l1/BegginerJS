@@ -71,8 +71,30 @@ temp = thermos.temperature;
 
 //Script tags to easily export data between files
 
+/*
 <html>
 <body>
 <script type="module" src="index.js"></script>
 </body>
 </html>
+*/
+
+//Promises:
+// muito semelhante ao tratamento de erro try-catch do java, você define oq deve acontecer em caso de sucesso ou fracasso da operação e tem que pegar uma excessao se der ruim,
+//ela tem 3 estagios: pending (falta de especificação), fullfield (deu boa), rejected(deu ruim)
+
+//criando uma promessa
+const makeServerRequest = new Promise((resolve, reject) => {
+
+    let responseFromServer = true;
+
+    if(responseFromServer) {
+        resolve("We got the data");
+    } else {
+        reject("Data not received");
+    }
+});
+//tratando promessas:
+makeServerRequest.then(result => console.log(result));
+makeServerRequest.catch(error => console.log(error));
+makeServerRequest.finally(settle => console.log("settled"));
