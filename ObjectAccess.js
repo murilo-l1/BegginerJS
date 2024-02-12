@@ -79,3 +79,30 @@ function lookUpProfile(name, prop) {
 }
 
 console.log("\n" + lookUpProfile("Harry", "likes"));
+
+//usando for(...in) para iterar sob campos de um objeto
+const users = {
+    Alan: {
+        online: false
+    },
+    Jeff: {
+        online: true
+    },
+    Sarah: {
+        online: false
+    }
+}
+
+const countOnline = (allUsers) => {
+    let numberOfOnlineUsers = 0;
+    for(const user in allUsers){
+        if(allUsers[user]["online"] === true){
+            numberOfOnlineUsers++;
+        }
+    }
+    return numberOfOnlineUsers;
+}
+console.log(countOnline(users));
+
+const getObjFields = (obj) => Object.keys(obj);
+console.log(getObjFields(users));

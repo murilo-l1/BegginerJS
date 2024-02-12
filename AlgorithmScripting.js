@@ -53,3 +53,48 @@ const myEndsWith = (str, target) => {
 
 }
 console.log(myEndsWith("Open sesame", "same"));
+
+const myRepeatString = (str, num) => {
+    if(num <= 0){
+        return "";
+    }
+    let repeatedStr = "";
+    for(let i = 0; i < num; i++){
+        repeatedStr = repeatedStr + str;
+    }
+    return repeatedStr;
+}
+console.log(myRepeatString("abc", 3));
+
+const truncateString = (str, num) => {
+    if(str.length <= num)
+        return str;
+
+    let truncatedStr = "";
+    for(let i = 0; i < num; i++){
+        truncatedStr += str[i];
+    }
+
+    return truncatedStr + "...";
+
+}
+console.log(truncateString("A-tisket a-tasket A green and yellow basket", 8));
+
+const truthTest = (arr, func) => {
+
+    for(let i = 0; i < arr.length; i++){
+        if(func(arr[i]))
+            return arr[i];
+    }
+    return undefined;
+}
+console.log(truthTest([1, 2, 3, 4], num => num % 2 === 0));
+
+//exactly equal types, not just meaning
+const booWho = (bool) => {
+    if(bool === true || bool === false)
+        return true
+    else
+        return false;
+}
+console.log(booWho(null));
