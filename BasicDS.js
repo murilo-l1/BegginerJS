@@ -6,11 +6,11 @@ const popShift = (arr) => {
 }
 console.log(popShift(['challenge', 'is', 'not', 'complete']));
 
-//.splice() example - removing certain elements
+//.splice() example - removing certain elements and replacing them
 const changeHtmlColours = (colors) =>{
     const startIndex = 0;
     const numberOfRemoved = 2;
-    colors.splice(startIndex, numberOfRemoved, 'DarkSalmon', 'BlanchedAlmond');
+    colors.splice(startIndex, numberOfRemoved, 'DarkSalmon', 'BlanchedAlmond'); // colors[start] - color[numberRemoved] = replace items
     return colors;
 }
 console.log(changeHtmlColours(['DarkGoldenRod', 'WhiteSmoke', 'LavenderBlush', 'PaleTurquoise', 'FireBrick']));
@@ -32,7 +32,7 @@ console.log(createNewSentence(['to', 'code']));
 
 //.indexOf() example - checks where something is in the array (if exists)
 function quickCheck(arr, elem) {
-    if(arr.indexOf(elem) != -1){
+    if(arr.indexOf(elem) !== -1){
         return true;
     }
     return false;

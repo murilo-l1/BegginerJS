@@ -92,9 +92,88 @@ console.log(truthTest([1, 2, 3, 4], num => num % 2 === 0));
 
 //exactly equal types, not just meaning
 const booWho = (bool) => {
-    if(bool === true || bool === false)
-        return true
-    else
-        return false;
+
+    return bool === true || bool === false;
 }
 console.log(booWho(null));
+
+const titleCase = (str) => {
+    let words = str.split(" "); //dividindo a string em palavras
+    for (let i = 0; i < words.length; i++) {
+        if (words[i].length > 1) {
+            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+        }
+        else{
+            words[i] = words[i].toUpperCase();
+        }
+    }
+    return words.join(" ");
+}
+console.log(titleCase("I'm a little tea pot"));
+
+const frankenSplice = (arr1, arr2, n) => {
+    if(n === 0 || arr2 === []){
+        return arr1;
+    }
+    let newArray = arr2.slice(); //guardando o conteudo de arr2 numa nova arr
+
+    for(let i = 0; i < arr1.length; i++){
+        newArray.splice(n,0,arr1[i]); //apartir de n não removeremos nada e colocaremos nas posicoes seguintes os elementos de arr1
+        n++;
+    }
+
+    return newArray;
+}
+console.log((frankenSplice([1, 2, 3], [4, 5, 6], 1)));
+
+//filtering all falsy elements by existing case
+const bouncer = (arr) => {
+    const filteredArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i])
+            filteredArr.push(arr[i]);
+    }
+    return filteredArr;
+}
+console.log(bouncer([7, "ate", "", false, 9]));
+
+const findIndexToInsert = (arr, num) => {
+    if(arr.length < 2 || arr === []){
+        return 0;
+    }
+    arr.sort((a,b) => a - b); //ordenando asc
+    console.log(arr);
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[arr.length - 1] < num){
+            return arr.length;
+        }
+        if(arr[i] === num){
+            return i;
+        }
+        if(num > arr[i] && num < arr[i + 1]){
+            return i + 1;
+        }
+    }
+}
+console.log(findIndexToInsert([3, 10, 5], 3));
+
+const mutation = (arr) => {
+    const wordsToMatch = arr[1].toLowerCase().split("");
+    const secondStr = arr[0].toLowerCase();
+    for (const word of wordsToMatch) {
+        if(secondStr.indexOf(word) === - 1){
+            return false;
+        }
+    }
+    return true;
+}
+console.log(mutation("ate", "date"));
+
+function chunkArrayInGroups(arr, size) {
+    let resultArr = [];
+    while(arr.length > 0){
+        resultArr.push(arr.splice(0, size));
+    }
+    return resultArr;
+}
+console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6, 7, 8], 2));
