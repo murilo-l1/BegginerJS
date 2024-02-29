@@ -198,9 +198,30 @@ const squareList = arr => {
     return squareNums;
 
 };
-
 const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
 console.log(squaredIntegers);
+
+const products = [
+    { name: "Laptop", price: 800, quantity: 10 },
+    { name: "Phone", price: 600, quantity: 5 },
+    { name: "Headphones", price: 10, quantity: 20 },
+    { name: "Tablet", price: 120, quantity: 0 },
+    { name: "Smartwatch", price: 200, quantity: 3 },
+    { name: "Camera", price: 40, quantity: 8 }
+];
+const classifyObjects = (products) => {
+    const productsAboveFifty = getProductsAboveFifty(products);
+    const premiumProducts = getPremiumProducts(products);
+    console.log("Products above $50: ");
+    productsAboveFifty.forEach(product => console.log(product))
+    console.log("Premium Products: ");
+    premiumProducts.forEach(product => console.log(product));
+}
+
+const getProductsAboveFifty = (arr) => arr.filter(product => product.price >= 50 && product.quantity > 0);
+const getPremiumProducts = (classified) =>  classified.filter(product => !(product.price >= 50 && product.quantity > 0))
+                                                       .map(premiumProduct => (premiumProduct.name += " PREMIUM"));
+classifyObjects(products);
 
 //.sort() examples
 const alphabeticalOrder = (arr) => {
@@ -213,3 +234,37 @@ const nonMutatingSort = (arr) => {
     return copyArr.sort((a, b) => a - b); //ordem ascendente
 }
 console.log(nonMutatingSort( [5, 6, 3, 2, 9]));
+
+//.split(splitterOcurrenc) method to split by keyEvent or regex
+const splitify = (str) =>{
+    const splitRegex = /[\s+,-.]/gi;
+    return str.split(splitRegex);
+}
+console.log(splitify("Hello World,I-am code"));
+
+//.join(delimiter) to create a sentence with an array of strs and use a delimiter on sentence
+const sentensify = (str) =>{
+    const splittedStr = str.split(/[-,.]+/);
+    return splittedStr.join(" "); //blank spaces will unify strings
+}
+console.log(sentensify("May,the-force-be-with.you"));
+
+//.every(conditionCheck) to see if EVERY element passes the condition returning bool
+const checkEveryPositive = (arr) => {
+    return arr.every(function(currentValue){
+        return currentValue > 0;
+    });
+}
+console.log(checkEveryPositive([1, 2, 3, -4, 5]));
+
+//.some(condition) to see if SOME element pass the condition (existance) returning bool
+const checkSomePositive = (arr) =>{
+    return arr.some(function(currentValue){
+        return currentValue > 0;
+    })
+}
+console.log(checkSomePositive([1, 2, 3, -4, 5]));
+
+//currying lets you use the returning of other funs to continuosly make the func in params without exaclty knowing them yet
+const addCurried = x => y => z => x + y + z;
+console.log(addCurried(33)(33)(3));

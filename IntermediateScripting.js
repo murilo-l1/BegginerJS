@@ -57,3 +57,77 @@ const whatIsInAName = (collection, source) => {
     return matchObjs;
 }
 console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
+const spinalCase = (str) => {
+    const findCamelCase = /([a-z])([A-Z])/g;
+    const splitterRegex = /[\s+_.]/;
+    let splittedStr;
+    if(findCamelCase.test(str)){
+        const camelCaseFound = str.replace(findCamelCase, "$1 $2");
+        splittedStr = camelCaseFound.toLowerCase().split(splitterRegex);
+        return splittedStr.join("-");
+    }else {
+        splittedStr = str.toLowerCase().split(splitterRegex);
+        return splittedStr.join("-");
+    }
+}
+console.log(spinalCase('thisIsSpinalTap'));
+const translatePigLatin = (str) => {
+    const firstVowelIndex = str.search(/[aeiou]/);
+    if(firstVowelIndex === 0){
+        return str.concat("way");
+    }
+    return str.substring(firstVowelIndex, str.length) + str.substring(0, firstVowelIndex) + "ay";
+}
+console.log(translatePigLatin("algorithm"));
+const myReplace = (str, before, after) => {
+    let wrappedAfter = "";
+    if(before.charAt(0) === before.charAt(0).toUpperCase()){
+         wrappedAfter = after.charAt(0).toUpperCase() + after.substring(1);
+        return str.replace(before,wrappedAfter);
+    }
+    if(before.charAt(0) === before.charAt(0).toLowerCase()){
+        wrappedAfter = after.charAt(0).toLowerCase() + after.substring(1);
+        return str.replace(before,wrappedAfter);
+    }
+    return str.replace(before,after);
+}
+console.log(myReplace("I think we should look up there", "up", "Down"));
+
+const pairDnaElements = (str) => {
+    const elements = str.split("");
+    const dnaPairs = [];
+    for (const element of elements) {
+        if(element === 'C'){
+            dnaPairs.push([element, 'G']);
+        }
+        else if(element === 'G'){
+            dnaPairs.push([element, 'C']);
+        }
+        else if(element === 'A'){
+            dnaPairs.push([element, 'T']);
+        }
+        else if(element === 'T'){
+            dnaPairs.push([element, 'A']);
+        }
+        else{
+            console.log("Not an DNA Element");
+        }
+    }
+    return dnaPairs;
+}
+console.log(pairDnaElements("ATCGA"));
+const findMissingLetter = (str) => {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    const startIndex = alphabet.indexOf(str[0]);
+    const endIndex = alphabet.indexOf(str[str.length - 1]);
+
+    const range = alphabet.substring(startIndex, endIndex + 1);
+
+    for (let i = 0; i < range.length; i++) {
+        if(range[i] !== str[i]){
+            return range[i];
+        }
+    }
+    return undefined;
+}
+console.log(findMissingLetter("abdefg"));
