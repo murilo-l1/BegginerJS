@@ -131,3 +131,183 @@ const findMissingLetter = (str) => {
     return undefined;
 }
 console.log(findMissingLetter("abdefg"));
+
+const uniteUnique = (arr, ...otherArrays) => {
+    const arrCopy = [arr];
+    const mergedArrays = arrCopy.concat(otherArrays);
+    const uniqueArray = [];
+
+    for (let i = 0; i < mergedArrays.length; i++) {
+        for (let j = 0; j < mergedArrays[i].length; j++) {
+            if(uniqueArray.indexOf(mergedArrays[i][j]) === -1){
+                uniqueArray.push(mergedArrays[i][j]);
+            }
+        }
+    }
+    return uniqueArray;
+}
+console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));
+
+const convertHTML = (str) => {
+    let htmlStr = str;
+
+    for(let i = 0; i < str.length; i++){
+        switch (str.charAt(i)){
+            case '\"': htmlStr = htmlStr.replaceAll('\"', '&quot;');
+            break;
+            case '&': htmlStr = htmlStr.replaceAll('&','&amp;');
+            break;
+            case '<': htmlStr = htmlStr.replaceAll('<', '&lt;');
+            break;
+            case '>': htmlStr = htmlStr.replaceAll('>', '&gt;');
+            break;
+            case '\'': htmlStr = htmlStr.replaceAll('\'', '&apos;');
+            break;
+        }
+    }
+    return htmlStr;
+}
+console.log(convertHTML('Stuff in "quotation marks"'));
+
+const fib = (num) => {
+    if(num === 0){
+        return 0;
+    }
+    else if(num === 1){
+        return 1;
+    }else {
+        return fib(num - 1) + fib(num - 2);
+    }
+}
+console.log(fib(5));
+
+const sumFibs = (num) => {
+    let sum = 0;
+    let prev= 0;
+    let curr= 1;
+
+    while(curr <= num){
+        if(curr % 2 !== 0){
+            sum += curr;
+        }
+        const next = prev + curr;
+        prev = curr;
+        curr = next;
+    }
+    return sum;
+}
+console.log(sumFibs(5));
+
+const sumPrimes = (num) => {
+    let sum = 0;
+    function checkPrime(num){ //helper method based on the 2 - sqrt division
+        const sqrt = Math.sqrt(num);
+        for (let i = 2; i <= sqrt; i++) {
+            if(num % i === 0){
+                return false;
+            }
+        }
+        return true;
+    }
+    //considering any value < 2 is not prime, we check for every num (2 - num)
+    for (let i = 2; i <= num ; i++) {
+        if(checkPrime(i))
+            sum += i;
+    }
+    return sum;
+}
+console.log(sumPrimes(10));
+
+const dropElements = (arr, func) => {
+    let droppedArr = [];
+    for (const element of arr) {
+        if(func(element)){
+            droppedArr = arr.slice(arr.indexOf(element), arr.length);
+            return droppedArr;
+        }
+    }
+    return droppedArr;
+}
+console.log(dropElements([1, 2, 3], function(n) {return n % 2 === 0;}));
+const binaryAgent = (str) => {
+    const getBinaryChars = str.split(/\s+/);
+    const getCharCodes = getBinaryChars.map(binaryCode => parseInt(binaryCode, 2));
+    const getWords = getCharCodes.map(charCode => String.fromCharCode(charCode));
+    return getWords.join("");
+}
+console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 " +
+    "01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
+
+const truthCheck = (collection, pre) => collection.every(obj => obj[pre]);
+console.log(truthCheck(
+    [
+    {name: "Quincy", role: "Founder", isBot: false},
+    {name: "Naomi", role: "", isBot: false},
+    {name: "Camperbot", role: "Bot", isBot: true}
+], "isBot"));
+
+/*function smallestCommons(arr) {
+    let fixArr = [];
+    if(arr[1] < arr[0]){
+        fixArr.push(arr[1], arr[0]);
+    }else {
+        fixArr = arr;
+    }
+}
+console.log(smallestCommons([4,3]));*/
+const Person = function(first, last) {
+    let firstName = first;
+    let lastName = last;
+
+    this.getFirstName = function() {
+        return firstName;
+    };
+    this.getLastName = function(){
+        return lastName;
+    };
+    this.getFullName = function(){
+        return this.getFirstName() + " " + this.getLastName();
+    }
+    this.setFirstName = function(newFirst){
+        return firstName = newFirst;
+    };
+    this.setLastName = function(newLast){
+        return lastName = newLast;
+    };
+    this.setFullName = function(newFirst, newLast){
+        this.setFirstName(newFirst);
+        this.setLastName(newLast);
+        return this.getFullName();
+    };
+};
+
+const orbitalPeriod = (arr) => {
+    const GM = 398600.4418;
+    const pi = Math.PI;
+    const earthRadius = 6367.4447;
+    const transformedObj = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        let name = arr[i].name;
+        const orbPeriod = Math.round((2 * pi) * Math.sqrt((Math.pow((earthRadius + arr[i].avgAlt), 3)/GM)));
+        transformedObj.push({name: name, orbitalPeriod: orbPeriod});
+    }
+    return transformedObj;
+}
+console.log(orbitalPeriod([{name: "sputnik", avgAlt: 35873.5553}]));
+
+
+const addTogether = (...params) => {
+    const [first, second] = [params[0], params[1]];
+    const isNum = (num) => ((num !== undefined && Number.isFinite(num)) === true);
+
+    if(isNum(first)){
+        if(isNum(second)){
+            return first + second;
+        }
+        return (first) => addTogether(second);
+    }else {
+        return undefined;
+    }
+}
+console.log(addTogether(1)(2));
