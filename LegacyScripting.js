@@ -1,4 +1,4 @@
-//Brute force impl
+//Brute force impl of palindrome for the test
 function palindrome(str) {
     const formattedString = str.replaceAll(/[\s+.;,*:()#\/\\_-]+/gi, "").toLowerCase();
     const size = formattedString.length;
@@ -26,13 +26,14 @@ function palindrome(str) {
 }
 console.log(palindrome("almostomla"));
 
-// using read-bake code
+// using read-bake code to make cleaner
 const cleanPalindrome = (str) => {
     const formattedString = str.replaceAll(/[\s+.;,*:()#\/\\_-]+/gi, "").toLowerCase();
     return formattedString === formattedString.split('').reverse().join('');
 }
 console.log(cleanPalindrome('oss#o'));
 
+//DecimalToRoman using key:value pairs
 const decimalToRoman = (num) => {
     if(typeof(num) !== 'number' || num < 1 || num > 3999)
         return 'Invalid input';
@@ -54,7 +55,7 @@ const decimalToRoman = (num) => {
         1: 'I'
     };
 
-    // Procura valor, incrementa romanNumber e então tira a quantia de num
+    // Procura valor, incrementa romanNumber e então tira a quantia (da chave que achou) de num
     for (const value of Object.keys(romanNumerals).sort((a, b) => b - a)) {
         while (num >= value) {
             romanNumber += romanNumerals[value];
@@ -65,3 +66,37 @@ const decimalToRoman = (num) => {
     return romanNumber;
 }
 console.log(decimalToRoman(501));
+
+//caesar cipher solution (caesarStr -> parsedStr)
+function rot13(caesarStr) {
+    const normalAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const caesarAlphabet = "NOPQRSTUVWXYZABCDEFGHIJKLM";
+    let parsedStr = "";
+
+    for (let i = 0; i < caesarStr.length; i++) {
+        let char = caesarStr[i];
+        let index = normalAlphabet.indexOf(char);
+        if(index !== -1){
+            parsedStr += caesarAlphabet[index];
+        }else{
+            parsedStr += char;
+        }
+    }
+    return parsedStr;
+}
+console.log(rot13("SERR PBPX"));
+
+//telephoneCheck with or w/o country code
+function telephoneCheck(str) {
+    const invalidDigitsRegex = /[?*asdf]/gi;
+    const validInitialDigits = ['(5', '5'];
+    if(str.match(invalidDigitsRegex) || (str[0] === ('-' || '0' || '2' || '('))){
+        return false;
+    }else{
+        return true;
+    }
+
+
+
+}
+console.log(telephoneCheck("1 456 789 4444"));
