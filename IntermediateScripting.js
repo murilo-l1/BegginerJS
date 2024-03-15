@@ -343,18 +343,20 @@ const orbitalPeriod = (arr) => {
 }
 console.log(orbitalPeriod([{name: "sputnik", avgAlt: 35873.5553}]));
 
-
+//addtogetherImpl to explore the return of a function
 const addTogether = (...params) => {
     const [first, second] = [params[0], params[1]];
-    const isNum = (num) => ((num !== undefined && Number.isFinite(num)) === true);
+    const isNum = (num) => ((typeof(num) === 'number' && Number.isFinite(num)) === true);
 
-    if(isNum(first)){
+    function addSecond(second){
         if(isNum(second)){
             return first + second;
         }
-        return (first) => addTogether(second);
-    }else {
-        return undefined;
+    }
+
+    if(isNum(first)){
+        if(params.length === 1) return addSecond;
+        if(params.length === 2) return addSecond(second);
     }
 }
-console.log(addTogether(1)(2));
+console.log(addTogether(2, 2));
