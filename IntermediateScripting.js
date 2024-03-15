@@ -229,6 +229,7 @@ const dropElements = (arr, func) => {
     return droppedArr;
 }
 console.log(dropElements([1, 2, 3], function(n) {return n % 2 === 0;}));
+
 const binaryAgent = (str) => {
     const getBinaryChars = str.split(/\s+/);
     const getCharCodes = getBinaryChars.map(binaryCode => parseInt(binaryCode, 2));
@@ -246,15 +247,61 @@ console.log(truthCheck(
     {name: "Camperbot", role: "Bot", isBot: true}
 ], "isBot"));
 
-/*function smallestCommons(arr) {
-    let fixArr = [];
-    if(arr[1] < arr[0]){
-        fixArr.push(arr[1], arr[0]);
-    }else {
-        fixArr = arr;
+const smallestCommons = (arr) => {
+
+    //fixing the array if given switched positions
+    const [min, max] = arr.sort((a,b) => a - b);
+    const numberOfDivisor = (max - min) + 1;
+
+    //get upperBound (a multiplicacao de todos os numeros do intervalo)
+    let upperBound = 1;
+    for (let i = min; i <= max ; i++) {
+        upperBound = upperBound * i;
+    }
+
+    // agora o multiplo avança de max em max até o maior multiplo (upperbound) e testa para todos do intervalo se é ou não divisivel
+    for (let multiple = max; multiple <= upperBound; multiple = multiple + max) {
+        let divisorCount = 0;
+        for (let i = min; i <= max ; i++) {
+            if(multiple % i === 0)
+                divisorCount++
+        }
+        if(divisorCount === numberOfDivisor){
+            return multiple;
+        }
     }
 }
-console.log(smallestCommons([4,3]));*/
+console.log(smallestCommons([2, 10]));
+
+
+const getMaxDepth = (arr, depth = 1) => {
+    let maxDepth = depth;
+
+    for (const arrElement of arr) {
+        if(Array.isArray(arrElement)){
+            const nestedDepth = getMaxDepth(arrElement, depth + 1);
+            if(nestedDepth > maxDepth){
+                maxDepth = nestedDepth;
+            }
+        }
+    }
+    return maxDepth;
+}
+
+const myFlat = (arr) => {
+    const flattedArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        if(Array.isArray(arr[i])){
+            flattedArr.push(...myFlat(arr[i])); // desse jeito eu consigo separar toda a array em elementos individuais, entrando nas camadas da profundidade
+        }
+        else{
+            flattedArr.push(arr[i]);
+        }
+    }
+    return flattedArr;
+}
+console.log(myFlat([1, [2], [3, [[4]]]]));
+
 const Person = function(first, last) {
     let firstName = first;
     let lastName = last;
