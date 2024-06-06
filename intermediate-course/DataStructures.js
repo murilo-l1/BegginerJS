@@ -237,7 +237,6 @@ class Set {
 
 }
 
-
 function testSet() {
 
     const setA = new Set();
@@ -350,3 +349,115 @@ function testMap(){
     console.log(myMap.has('name'));
 }
 testMap();
+
+let called = 0;
+const hash = string => {
+    called++;
+    let hashed = 0;
+    for (let i = 0; i < string.length; i++) {
+        hashed += string.charCodeAt(i);
+    }
+    return hashed;
+};
+const HashTable = function() {
+    this.collection = {};
+
+    this.add = function (key, value){
+        const hashedKey = hash(key);
+        this.collection[hashedKey] = this.collection[hashedKey] || {};
+        this.collection[hashedKey][key] = value;
+    }
+
+    this.remove = function (key) {
+        const hashedKey = hash(key);
+        delete this.collection[hashedKey][key];
+        if(Object.keys(this.collection[hashedKey]).length === 0){
+            delete this.collection[hashedKey];
+        }
+    }
+
+    this.lookup = function (key){
+        const hashedKey = hash(key);
+        return this.collection[hashedKey][key];
+    }
+};
+
+const Node = function(element) {
+    this.element = element;
+    this.next = null;
+};
+const Kitten = new Node('Kitten');
+const Puppy = new Node('Puppy');
+
+Kitten.next = Puppy;
+const Dog = new Node('Dog');
+const Cat = new Node('Cat');
+Puppy.next = Cat;
+Cat.next = Dog;
+
+function LinkedList() {
+    var length = 0;
+    var head = null;
+
+    const Node = function(element){
+        this.element = element;
+        this.next = null;
+    };
+
+    this.head = function(){
+        return head;
+    };
+
+    this.size = function(){
+        return length;
+    };
+
+    this.add = function(element){
+        const newNode = new Node(element);
+        if(head != null) {
+            let current = head;
+            while(current.next != null){
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        else{
+            head = newNode;
+        }
+        length++;
+    };
+
+    this.remove = function(element){
+        // assim n perde referencia do prox e remove ele
+        if(head.element === element){
+            head = head.next;
+            length--;
+            return length;
+        }
+        let previous = head;
+        // previous vai percorrer a lista enquanto nao achar null ou o elemento que é pra ser removido
+        while(previous){
+            let current = previous.next;
+            if(current){
+                if(current.element === element){
+                    previous.next = current.next;
+                    return length--;
+                }
+            }
+            previous = current;
+        }
+    };
+
+    this.isEmpty = () => {
+        if(head == null) return true;
+
+        let count = 0;
+        let temp = head;
+        while(temp.next != null){
+            count++;
+            temp = temp.next;
+        }
+        return count === 0;
+    }
+
+}
